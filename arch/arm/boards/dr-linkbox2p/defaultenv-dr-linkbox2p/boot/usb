@@ -1,0 +1,4 @@
+#!/bin/sh
+
+global.bootm.image=/mnt/disk0.0/boot/fitImage@${global.boot.fitnode}
+global linux.bootargs.dyn.root="root=/dev/sda1 rootfstype=ext4 rootwait ro rauc.slot=_external_"

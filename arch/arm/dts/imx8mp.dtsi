@@ -33,6 +33,10 @@
 /delete-node/ &dsp;
 /delete-node/ &dsp_reserved;
 
+&edacmc {
+	compatible = "fsl,imx8mp-ddrc", "fsl,imx8m-ddrc", "snps,ddrc-3.80a";
+};
+
 feat: &ocotp {
 	#feature-cells = <1>;
 	barebox,feature-controller;
@@ -72,12 +76,4 @@ feat: &ocotp {
 
 &hsio_blk_ctrl {
 	barebox,allow-dummy;
-};
-
-&usb_dwc3_0 {
-	snps,dis-u2-freeclk-exists-quirk;
-};
-
-&usb_dwc3_1 {
-	snps,dis-u2-freeclk-exists-quirk;
 };

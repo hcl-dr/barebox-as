@@ -1,0 +1,15 @@
+#!/bin/sh
+
+detect mmc0
+global.autoboot_abort_key="ctrl-c"
+global bootm.fdt="dr-imx8mp-evk.dtb"
+global.boot.default="bootchooser sd"
+global.bootchooser.state_prefix="state.bootstate"
+global.bootchooser.targets="system0 system1"
+global.boot.watchdog_timeout=100
+global boot.fitnode="conf-freescale_dr-imx8mp-evk.dtb"
+loadenv
+echo "Init USB. kick it twice to allow disk power up"
+usb
+sleep 2
+usb

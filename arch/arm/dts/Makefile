@@ -222,4 +222,10 @@ lwl-$(CONFIG_MACH_MNT_REFORM) += imx8mq-mnt-reform2.dtb.o
 lwl-$(CONFIG_MACH_VARISCITE_DT8MCUSTOMBOARD_IMX8MP) += imx8mp-var-dart-dt8mcustomboard.dtb.o
 lwl-$(CONFIG_MACH_TQ_MBA9XXXCA) += imx93-tqma9352-mba93xxca.dtb.o
 
+lwl-$(CONFIG_MACH_DR_IMX8MQ_EVK) += dr-imx8mq-evk.dtb.o
+lwl-$(CONFIG_MACH_DR_IMX8MP_EVK) += dr-imx8mp-evk.dtb.o
+lwl-$(CONFIG_MACH_DR_SIMPAD2P) += dr-simpad2p-revA.dtb.o dr-simpad2p-revB.dtb.o dr-simpad2p-revC.dtb.o
+lwl-$(CONFIG_MACH_DR_LINKBOX2P) += dr-linkbox2p-revA.dtb.o dr-linkbox2p-revB.dtb.o dr-linkbox2p-revC.dtb.o
+lwl-$(CONFIG_MACH_DR_CPUM2) += dr-cpum2.dtb.o dr-cpum2-revB.dtb.o
+
 clean-files := *.dtb *.dtb.S .*.dtc .*.pre .*.dts *.dtb.z

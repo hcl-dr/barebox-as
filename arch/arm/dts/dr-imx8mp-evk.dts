@@ -1,0 +1,242 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright 2017 Data Respons
+ */
+
+/dts-v1/;
+
+#include <arm64/freescale/imx8mp-evk.dts>
+#include "imx8mp.dtsi"
+
+/ {
+	model = "NXP i.MX8MP DR";
+	aliases {
+		mmc0 = &usdhc3;
+		mmc1 = &usdhc2;
+		state = &state_sd;
+		ethernet0 = &fec;
+	};
+
+	chosen {
+		environment-sd {
+			compatible = "barebox,environment";
+			device-path = &usdhc2, "partname:barebox-environment";
+			status = "disabled";
+		};
+		environment-emmc {
+			compatible = "barebox,environment";
+			device-path = &usdhc3, "partname:barebox-environment";
+			status = "disabled";
+		};
+		environment-qspi {
+			compatible = "barebox,environment";
+			device-path = &mt25qu256a, "partname:barebox-environment-qspi";
+			status = "okay";
+		};
+	};
+
+	state_sd: state {
+		magic = <0x883b86a6>;
+		compatible = "barebox,state";
+		backend-type = "raw";
+		backend = <&backend_state_usdhc>;
+		backend-stridesize = <0x200>;
+		status = "okay";
+		/*backend-storage-type = "circular"; */
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+		bootstate {
+			#address-cells = <1>;
+			#size-cells = <1>;
+			last_chosen {
+				reg = <0x0 0x4>;
+				type = "uint32";
+			};
+			system0 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				remaining_attempts {
+					reg = <0x4 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x8 0x4>;
+					type = "uint32";
+					default = <21>;
+				};
+				ok {
+					reg = <0xc 0x4>;
+					type = "uint32";
+					default = <0>;
+				};
+			};
+			system1 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				remaining_attempts {
+					reg = <0x10 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x14 0x4>;
+					type = "uint32";
+					default = <20>;
+				};
+				ok {
+					reg = <0x18 0x4>;
+					type = "uint32";
+					default = <0>;
+				};
+			};
+		};
+	};
+
+	gpio-leds {
+		status {
+			barebox,default-trigger = "heartbeat";
+		};
+	};
+
+
+};
+
+&iomuxc {
+	pinctrl_flexspi0: flexspi0grp {
+		fsl,pins = <
+			MX8MP_IOMUXC_NAND_ALE__FLEXSPI_A_SCLK           0x1c2
+			MX8MP_IOMUXC_NAND_CE0_B__FLEXSPI_A_SS0_B        0x82
+			MX8MP_IOMUXC_NAND_DATA00__FLEXSPI_A_DATA00      0x82
+			MX8MP_IOMUXC_NAND_DATA01__FLEXSPI_A_DATA01      0x82
+			MX8MP_IOMUXC_NAND_DATA02__FLEXSPI_A_DATA02      0x82
+			MX8MP_IOMUXC_NAND_DATA03__FLEXSPI_A_DATA03      0x82
+		>;
+	};
+};
+
+
+&ethphy1 {
+	reset-assert-us = <15000>;
+	reset-deassert-us = <100000>;
+};
+
+&fec {
+	status = "disabled";
+};
+
+&usdhc2 {
+	status = "okay";
+};
+
+&usdhc3 {
+	status = "okay";
+
+	partitions {
+		compatible = "fixed-partitions";
+		#size-cells = <1>;
+		#address-cells = <1>;
+		partition@0 {
+			label = "barebox";
+			reg = <0x0 0xe0000>;
+		};
+
+		partition@e0000 {
+			label = "barebox-environment";
+			reg = <0xe0000 0x20000>;
+		};
+
+		backend_state_usdhc: partition@100000 {
+			reg = <0x100000 0x100000>;
+			label = "state-emmc";
+		};
+	};
+};
+
+&ocotp {
+	barebox,provide-mac-address = <&fec 0x640>;
+};
+
+&flexspi {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_flexspi0>;
+	status = "okay";
+
+	mt25qu256a: flash@0 {
+		reg = <0>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "micron,mt25qu256a", "jedec,spi-nor";
+		spi-max-frequency = <80000000>;
+		spi-tx-bus-width = <1>;
+		spi-rx-bus-width = <4>;
+		spi-nor,ddr-quad-read-dummy = <6>;
+
+	};
+};
+
+&mt25qu256a {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		partition@0 {
+			label = "barebox-environment-qspi";
+			reg = <0x0 0x200000>;
+		};
+
+		backend_state_qspi: state@200000 {
+			label = "barebox-state";
+			reg = <0x200000 0x200000>;
+		};
+
+		partition@400000 {
+			label = "system_a";
+			reg = <0x400000 0x40000>;
+		};
+		partition@440000 {
+			label = "system_b";
+			reg = <0x440000 0x40000>;
+		};
+
+		partition@480000 {
+			label = "user_a";
+			reg = <0x480000 0x40000>;
+		};
+		partition@4c0000 {
+			label = "user_b";
+			reg = <0x4c0000 0x40000>;
+		};
+	};
+};
+
+&usb3_phy0 {
+	status = "okay";
+};
+
+&usb3_0 {
+	status = "okay";
+};
+
+&usb_dwc3_0 {
+	status = "okay";
+	dr_mode = "peripheral";
+};
+
+&usb_dwc3_1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_usb1_vbus>;
+	dr_mode = "host";
+	status = "okay";
+};
+
+&iomuxc {
+		pinctrl_hog: hoggrp {
+		fsl,pins = <
+			MX8MP_IOMUXC_SAI2_RXC__GPIO4_IO22		0x02	/* EQOS PHY RESET */
+			MX8MP_IOMUXC_SAI1_RXD0__GPIO4_IO02		0x02	/* FEC PHY RESET */
+		>;
+	};
+};
