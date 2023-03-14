@@ -1053,6 +1053,192 @@ static const struct imx_pgc_domain imx8mp_pgc_domains[] = {
 	},
 };
 
+static const struct imx_pgc_domain imx8mpl_pgc_domains[] = {
+	[IMX8MP_POWER_DOMAIN_MIPI_PHY1] = {
+		.genpd = {
+			.name = "mipi-phy1",
+		},
+		.bits = {
+			.pxx = IMX8MP_MIPI_PHY1_SW_Pxx_REQ,
+			.map = IMX8MP_MIPI_PHY1_A53_DOMAIN,
+		},
+		.pgc = BIT(IMX8MP_PGC_MIPI1),
+	},
+
+	[IMX8MP_POWER_DOMAIN_PCIE_PHY] = {
+		.genpd = {
+			.name = "pcie-phy1",
+		},
+		.bits = {
+			.pxx = IMX8MP_PCIE_PHY_SW_Pxx_REQ,
+			.map = IMX8MP_PCIE_PHY_A53_DOMAIN,
+		},
+		.pgc = BIT(IMX8MP_PGC_PCIE),
+	},
+
+	[IMX8MP_POWER_DOMAIN_USB1_PHY] = {
+		.genpd = {
+			.name = "usb-otg1",
+		},
+		.bits = {
+			.pxx = IMX8MP_USB1_PHY_Pxx_REQ,
+			.map = IMX8MP_USB1_PHY_A53_DOMAIN,
+		},
+		.pgc = BIT(IMX8MP_PGC_USB1),
+	},
+
+	[IMX8MP_POWER_DOMAIN_USB2_PHY] = {
+		.genpd = {
+			.name = "usb-otg2",
+		},
+		.bits = {
+			.pxx = IMX8MP_USB2_PHY_Pxx_REQ,
+			.map = IMX8MP_USB2_PHY_A53_DOMAIN,
+		},
+		.pgc = BIT(IMX8MP_PGC_USB2),
+	},
+
+	[IMX8MP_POWER_DOMAIN_MLMIX] = {
+		.genpd = {
+			.name = "mlmix",
+		},
+		.bits = {
+			.pxx = IMX8MP_MLMIX_Pxx_REQ,
+			.map = IMX8MP_MLMIX_A53_DOMAIN,
+			.hskreq = IMX8MP_MLMIX_PWRDNREQN,
+			.hskack = IMX8MP_MLMIX_PWRDNACKN,
+		},
+		.pgc = BIT(IMX8MP_PGC_MLMIX),
+		.keep_clocks = true,
+	},
+
+	[IMX8MP_POWER_DOMAIN_AUDIOMIX] = {
+		.genpd = {
+			.name = "audiomix",
+		},
+		.bits = {
+			.pxx = IMX8MP_AUDIOMIX_Pxx_REQ,
+			.map = IMX8MP_AUDIOMIX_A53_DOMAIN,
+			.hskreq = IMX8MP_AUDIOMIX_PWRDNREQN,
+			.hskack = IMX8MP_AUDIOMIX_PWRDNACKN,
+		},
+		.pgc = BIT(IMX8MP_PGC_AUDIOMIX),
+		.keep_clocks = true,
+	},
+
+	[IMX8MP_POWER_DOMAIN_GPU2D] = {
+		.genpd = {
+			.name = "gpu2d",
+		},
+		.bits = {
+			.pxx = IMX8MP_GPU_2D_Pxx_REQ,
+			.map = IMX8MP_GPU2D_A53_DOMAIN,
+		},
+		.pgc = BIT(IMX8MP_PGC_GPU2D),
+	},
+
+	[IMX8MP_POWER_DOMAIN_GPUMIX] = {
+		.genpd = {
+			.name = "gpumix",
+		},
+		.bits = {
+			.pxx = IMX8MP_GPU_SHARE_LOGIC_Pxx_REQ,
+			.map = IMX8MP_GPUMIX_A53_DOMAIN,
+			.hskreq = IMX8MP_GPUMIX_PWRDNREQN,
+			.hskack = IMX8MP_GPUMIX_PWRDNACKN,
+		},
+		.pgc = BIT(IMX8MP_PGC_GPUMIX),
+		.keep_clocks = true,
+	},
+
+	[IMX8MP_POWER_DOMAIN_GPU3D] = {
+		.genpd = {
+			.name = "gpu3d",
+		},
+		.bits = {
+			.pxx = IMX8MP_GPU_3D_Pxx_REQ,
+			.map = IMX8MP_GPU3D_A53_DOMAIN,
+		},
+		.pgc = BIT(IMX8MP_PGC_GPU3D),
+	},
+
+	[IMX8MP_POWER_DOMAIN_MEDIAMIX] = {
+		.genpd = {
+			.name = "mediamix",
+		},
+		.bits = {
+			.pxx = IMX8MP_MEDIMIX_Pxx_REQ,
+			.map = IMX8MP_MEDIAMIX_A53_DOMAIN,
+			.hskreq = IMX8MP_MEDIAMIX_PWRDNREQN,
+			.hskack = IMX8MP_MEDIAMIX_PWRDNACKN,
+		},
+		.pgc = BIT(IMX8MP_PGC_MEDIAMIX),
+		.keep_clocks = true,
+	},
+
+	[IMX8MP_POWER_DOMAIN_HDMIMIX] = {
+		.genpd = {
+			.name = "hdmimix",
+		},
+		.bits = {
+			.pxx = IMX8MP_HDMIMIX_Pxx_REQ,
+			.map = IMX8MP_HDMIMIX_A53_DOMAIN,
+			.hskreq = IMX8MP_HDMIMIX_PWRDNREQN,
+			.hskack = IMX8MP_HDMIMIX_PWRDNACKN,
+		},
+		.pgc = BIT(IMX8MP_PGC_HDMIMIX),
+		.keep_clocks = true,
+	},
+
+	[IMX8MP_POWER_DOMAIN_HDMI_PHY] = {
+		.genpd = {
+			.name = "hdmi-phy",
+		},
+		.bits = {
+			.pxx = IMX8MP_HDMI_PHY_Pxx_REQ,
+			.map = IMX8MP_HDMI_PHY_A53_DOMAIN,
+		},
+		.pgc = BIT(IMX8MP_PGC_HDMI),
+	},
+
+	[IMX8MP_POWER_DOMAIN_MIPI_PHY2] = {
+		.genpd = {
+			.name = "mipi-phy2",
+		},
+		.bits = {
+			.pxx = IMX8MP_MIPI_PHY2_Pxx_REQ,
+			.map = IMX8MP_MIPI_PHY2_A53_DOMAIN,
+		},
+		.pgc = BIT(IMX8MP_PGC_MIPI2),
+	},
+
+	[IMX8MP_POWER_DOMAIN_HSIOMIX] = {
+		.genpd = {
+			.name = "hsiomix",
+		},
+		.bits = {
+			.pxx = IMX8MP_HSIOMIX_Pxx_REQ,
+			.map = IMX8MP_HSIOMIX_A53_DOMAIN,
+			.hskreq = IMX8MP_HSIOMIX_PWRDNREQN,
+			.hskack = IMX8MP_HSIOMIX_PWRDNACKN,
+		},
+		.pgc = BIT(IMX8MP_PGC_HSIOMIX),
+		.keep_clocks = true,
+	},
+
+	[IMX8MP_POWER_DOMAIN_MEDIAMIX_ISPDWP] = {
+		.genpd = {
+			.name = "mediamix-isp-dwp",
+		},
+		.bits = {
+			.pxx = IMX8MP_MEDIA_ISP_DWP_Pxx_REQ,
+			.map = IMX8MP_MEDIA_ISPDWP_A53_DOMAIN,
+		},
+		.pgc = BIT(IMX8MP_PGC_MEDIA_ISP_DWP),
+	},
+};
+
+
 static const struct imx_pgc_regs imx8mp_pgc_regs = {
 	.map = IMX8MP_GPC_PGC_CPU_MAPPING,
 	.pup = IMX8MP_GPC_PU_PGC_SW_PUP_REQ,
@@ -1062,6 +1248,12 @@ static const struct imx_pgc_regs imx8mp_pgc_regs = {
 static const struct imx_pgc_domain_data imx8mp_pgc_domain_data = {
 	.domains = imx8mp_pgc_domains,
 	.domains_num = ARRAY_SIZE(imx8mp_pgc_domains),
+	.pgc_regs = &imx8mp_pgc_regs,
+};
+
+static const struct imx_pgc_domain_data imx8mpl_pgc_domain_data = {
+	.domains = imx8mpl_pgc_domains,
+	.domains_num = ARRAY_SIZE(imx8mpl_pgc_domains),
 	.pgc_regs = &imx8mp_pgc_regs,
 };
 
@@ -1302,6 +1494,7 @@ static const struct of_device_id imx_gpcv2_dt_ids[] = {
 	{ .compatible = "fsl,imx8mm-gpc", .data = &imx8mm_pgc_domain_data, },
 	{ .compatible = "fsl,imx8mn-gpc", .data = &imx8mn_pgc_domain_data, },
 	{ .compatible = "fsl,imx8mp-gpc", .data = &imx8mp_pgc_domain_data, },
+	{ .compatible = "fsl,imx8mpl-gpc", .data = &imx8mpl_pgc_domain_data, },
 	{ .compatible = "fsl,imx8mq-gpc", .data = &imx8m_pgc_domain_data, },
 	{ }
 };

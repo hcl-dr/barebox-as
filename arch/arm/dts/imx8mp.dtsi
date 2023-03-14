@@ -33,10 +33,6 @@
 /delete-node/ &dsp;
 /delete-node/ &dsp_reserved;
 
-&edacmc {
-	compatible = "fsl,imx8mp-ddrc", "fsl,imx8m-ddrc", "snps,ddrc-3.80a";
-};
-
 feat: &ocotp {
 	#feature-cells = <1>;
 	barebox,feature-controller;
