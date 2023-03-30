@@ -73,3 +73,11 @@ feat: &ocotp {
 &hsio_blk_ctrl {
 	barebox,allow-dummy;
 };
+
+&usb_dwc3_0 {
+	snps,dis-u2-freeclk-exists-quirk;
+};
+
+&usb_dwc3_1 {
+	snps,dis-u2-freeclk-exists-quirk;
+};
