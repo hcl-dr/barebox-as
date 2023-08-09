@@ -27,6 +27,15 @@ static char *DTBS[8] = { "dr-linkbox2p-revB.dtb",
 						 "NA",
 						 "NA" };
 
+static char *MODEL[8] = { "Linkbox2p-revB",
+						 "Linkbox2p",
+						 "Linkbox2p-revB",
+						 "Linkbox2p-revC",
+						 "Linkbox2p-revD",
+						 "NA",
+						 "NA",
+						 "NA" };
+
 static bool is_linkbox2p = false;
 static int get_hwrev(void)
 {
@@ -90,7 +99,8 @@ static int dr_linkbox2p_setup_board_late(void)
 	if (!is_linkbox2p)
 		return 0;
 	val = get_hwrev() & 0x7;
-	printf("HW revision: %d\n", val);
+	printf("HW revision: %d (%s)\n", val, MODEL[val]);
+	barebox_set_model(MODEL[val]);
 	globalvar_add_simple("bootm.fdt", DTBS[val]);
 
 	strcat(fitnode,  DTBS[val]);

@@ -200,8 +200,5 @@ ENTRY_FUNCTION(start_dr_linkbox2p, r0, r1, r2)
 	relocate_to_current_adr();
 	setup_c();
 
-	IMD_USED_OF(dr_linkbox2p_revA);
-	IMD_USED_OF(dr_linkbox2p_revB);
-
 	dr_linkbox2p_start();
 }

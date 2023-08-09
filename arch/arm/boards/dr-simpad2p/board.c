@@ -24,6 +24,15 @@ static char *DTBS[8] = { "dr-simpad2p-revB.dtb",
 						 "NA",
 						 "NA" };
 
+static char *MODEL[8] = { "Simpad2p-revB",
+						 "Simpad2p",
+						 "Simpad2p-revB",
+						 "Simpad2p-revC",
+						 "Simpad2p-revD",
+						 "NA",
+						 "NA",
+						 "NA" };
+
 static bool is_simpad2p = false;
 static int get_hwrev(void)
 {
@@ -53,6 +62,7 @@ static int dr_simpad2p_probe(struct device *dev)
 	val = readl(MX8MP_IOMUXC_GPR_BASE_ADDR + MX8MP_IOMUXC_GPR1);
 	val |= MX8MP_IOMUXC_GPR1_ENET1_RGMII_EN;
 	writel(val, MX8MP_IOMUXC_GPR_BASE_ADDR + MX8MP_IOMUXC_GPR1);
+
 	return 0;
 }
 
@@ -84,7 +94,8 @@ static int dr_simpad2p_setup_board_late(void)
 		return 0;
 
 	val = get_hwrev() & 0x7;
-	printf("HW revision: %d\n", val);
+	printf("HW revision: %d (%s)\n", val, MODEL[val]);
+	barebox_set_model(MODEL[val]);
 	globalvar_add_simple("bootm.fdt", DTBS[val]);
 
 	strcat(fitnode,  DTBS[val]);

@@ -187,7 +187,5 @@ ENTRY_FUNCTION(start_dr_cpum2, r0, r1, r2)
 	relocate_to_current_adr();
 	setup_c();
 
-	IMD_USED_OF(dr_cpum2_revB);
-
 	dr_cpum2_start();
 }
