@@ -28,6 +28,7 @@
 
 extern char __dtb_z_dr_cpum2_start[];
 extern char __dtb_z_dr_cpum2_revB_start[];
+extern char __dtb_z_dr_cpum2I_revB_start[];
 
 #define UART_PAD_CTRL   MUX_PAD_CTRL(MX8MP_PAD_CTL_DSE6 | \
 				     MX8MP_PAD_CTL_FSEL)
@@ -173,6 +174,9 @@ static __noreturn noinline void dr_cpum2_start(void)
 	case 1:
 		imx8mp_barebox_entry(__dtb_z_dr_cpum2_start);
 		break;
+
+	case 6:
+		imx8mp_barebox_entry(__dtb_z_dr_cpum2I_revB_start);
 
 	default:
 		imx8mp_barebox_entry(__dtb_z_dr_cpum2_revB_start);

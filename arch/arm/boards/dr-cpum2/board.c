@@ -15,7 +15,8 @@
 #include <globalvar.h>
 
 static char *DTBS[8] = {
-	"dr-cpum2.dtb", "dr-cpum2.dtb", "dr-cpum2-revB.dtb", "NA", "NA", "NA", "NA", "NA"
+	"dr-cpum2.dtb", "dr-cpum2.dtb", "dr-cpum2-revB.dtb",  "NA",
+	"NA",		"NA",		"dr-cpum2I-revB.dtb", "NA"
 };
 
 static char fitnode[120] = "conf-freescale_";
@@ -32,7 +33,6 @@ static int get_hwrev(void)
 	rev |= gpio_get_value(IMX_GPIO_NR(5, 0)) << 1;
 	rev |= gpio_get_value(IMX_GPIO_NR(5, 1)) << 2;
 	return rev;
-
 }
 
 static int dr_cpum2_probe(struct device *dev)
@@ -41,7 +41,8 @@ static int dr_cpum2_probe(struct device *dev)
 	is_dr_cpum2p = true;
 	defaultenv_append_directory(defaultenv_dr_cpum2);
 	barebox_set_hostname("cpum2");
-	imx8m_bbu_internal_mmcboot_register_handler("eMMC", "/dev/mmc0", BBU_HANDLER_FLAG_DEFAULT);
+	imx8m_bbu_internal_mmcboot_register_handler("eMMC", "/dev/mmc0",
+						    BBU_HANDLER_FLAG_DEFAULT);
 
 	val = readl(MX8MP_IOMUXC_GPR_BASE_ADDR + MX8MP_IOMUXC_GPR1);
 	val |= MX8MP_IOMUXC_GPR1_ENET1_RGMII_EN;
@@ -77,10 +78,10 @@ static int dr_cpum2_setup_board_late(void)
 		return 0;
 
 	val = get_hwrev() & 0x7;
-	printf("HW revision: %d\n", val);
+	printf("HW revision: %d, %s\n", val, val & 4 ? "Industrial" : "Commercial");
 	globalvar_add_simple("bootm.fdt", DTBS[val]);
 
-	strcat(fitnode,  DTBS[val]);
+	strcat(fitnode, DTBS[val]);
 	globalvar_add_simple("boot.fitnode", fitnode);
 	return dr_cpum2_phy_reset();
 }
