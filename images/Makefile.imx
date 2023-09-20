@@ -483,16 +483,29 @@ pblb-$(CONFIG_MACH_DR_SIMPAD2P) += start_dr_simpad2p
 CFG_start_dr_simpad2p.pblb.imximg = $(board)/dr-simpad2p/flash-header-imx8mp.imxcfg
 FILE_barebox-dr-simpad2p.img = start_dr_simpad2p.pblb.pimximg
 image-$(CONFIG_MACH_DR_SIMPAD2P) += barebox-dr-simpad2p.img
+ifeq ($(CONFIG_HABV4_IMAGE_SIGNED), y)
+	FILE_barebox-dr-simpad2p-s.img = start_dr_simpad2p.pblb.psimximg
+	image-$(CONFIG_MACH_DR_SIMPAD2P) += barebox-dr-simpad2p-s.img
+endif
 
 pblb-$(CONFIG_MACH_DR_LINKBOX2P) += start_dr_linkbox2p
 CFG_start_dr_linkbox2p.pblb.imximg = $(board)/dr-linkbox2p/flash-header-imx8mp.imxcfg
 FILE_barebox-dr-linkbox2p.img = start_dr_linkbox2p.pblb.pimximg
 image-$(CONFIG_MACH_DR_LINKBOX2P) += barebox-dr-linkbox2p.img
+ifeq ($(CONFIG_HABV4_IMAGE_SIGNED), y)
+	FILE_barebox-dr-linkbox2p-s.img = start_dr_linkbox2p.pblb.psimximg
+	image-$(CONFIG_MACH_DR_LINKBOX2P) += barebox-dr-linkbox2p-s.img
+endif
+#$(call build_imx8m_habv4img, CONFIG_MACH_DR_LINKBOX2P, start_dr_linkbox2p, dr-linkbox2p/flash-header-imx8mp.imxcfg, dr-linkbox2p)
 
 pblb-$(CONFIG_MACH_DR_CPUM2) += start_dr_cpum2
 CFG_start_dr_cpum2.pblb.imximg = $(board)/dr-cpum2/flash-header-imx8mp.imxcfg
 FILE_barebox-dr-cpum2.img = start_dr_cpum2.pblb.pimximg
 image-$(CONFIG_MACH_DR_CPUM2) += barebox-dr-cpum2.img
+ifeq ($(CONFIG_HABV4_IMAGE_SIGNED), y)
+	FILE_barebox-dr-cpum2-s.img = start_dr_cpum2.pblb.psimximg
+	image-$(CONFIG_MACH_DR_CPUM2) += barebox-dr-cpum2-s.img
+endif
 
 $(call build_imx8m_habv4img, CONFIG_MACH_POLYHEX_DEBIX, start_polyhex_debix, polyhex-debix/flash-header-polyhex-debix, polyhex-debix)
 

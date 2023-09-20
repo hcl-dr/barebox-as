@@ -3,10 +3,12 @@
  * Copyright 2017 Data Respons
  */
 
-/dts-v1/;
-
 #include <arm64/freescale/imx8mp-evk.dts>
 #include "imx8mp.dtsi"
+
+#ifdef CONFIG_BOOTM_FITIMAGE_PUBKEY
+#include CONFIG_BOOTM_FITIMAGE_PUBKEY
+#endif
 
 / {
 	model = "NXP i.MX8MP DR";
