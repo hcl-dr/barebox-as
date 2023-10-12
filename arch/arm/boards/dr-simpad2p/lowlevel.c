@@ -107,22 +107,12 @@ static void power_init_board(void)
 
 extern struct dram_timing_info dr_simpad2p_dram_timing;
 
-static void start_atf(void)
+static void init_ddr(void)
 {
-	/*
-	 * If we are in EL3 we are running for the first time and need to
-	 * initialize the DRAM and run TF-A (BL31). The TF-A will then jump
-	 * to DRAM in EL2.
-	 */
-	if (current_el() != 3)
-		return;
-
 	printf("Init power\n");
 	power_init_board();
 	printf("Init DDR\n");
 	imx8mp_ddr_init(&dr_simpad2p_dram_timing, DRAM_TYPE_LPDDR4);
-	printf("Handover to ATF\n");
-	imx8mp_load_and_start_image_via_tfa();
 }
 
 static int get_hwrev(void)
@@ -162,40 +152,44 @@ static int get_hwrev(void)
 static __noreturn noinline void dr_simpad2p_start(void)
 {
 	int hwrev;
+	char *dtb = NULL;
 	setup_uart();
-
-	start_atf();
+	printf("Run level %d\n", current_el());
+	if (current_el() == 3) {
+		init_ddr();
+		printf("Handover to ATF\n");
+		imx8mp_load_and_start_image_via_tfa();
+	}
 	hwrev = get_hwrev();
 	printf("HW revision %d\n", hwrev);
 
 	switch (hwrev) {
 	case 1:
-		imx8mp_barebox_entry(__dtb_z_dr_simpad2p_revA_start);
+		dtb = __dtb_z_dr_simpad2p_revA_start;
 		break;
 
 	case 0:
 	case 2:
-		imx8mp_barebox_entry(__dtb_z_dr_simpad2p_revB_start);
+		dtb = __dtb_z_dr_simpad2p_revB_start;
 		break;
 
 	case 3:
 	case 4:
-		imx8mp_barebox_entry(__dtb_z_dr_simpad2p_revC_start);
+		dtb = __dtb_z_dr_simpad2p_revC_start;
 		break;
 
 	default:
 		printf("No DT for this HW rev\n");
-		imx8mp_barebox_entry(__dtb_z_dr_simpad2p_revC_start);
+		dtb = __dtb_z_dr_simpad2p_revC_start;
 		break;
 	}
+	imx8mp_barebox_entry(dtb);
 }
 
 ENTRY_FUNCTION(start_dr_simpad2p, r0, r1, r2)
 {
 	imx8mp_cpu_lowlevel_init();
-
 	relocate_to_current_adr();
 	setup_c();
-
 	dr_simpad2p_start();
 }

@@ -152,7 +152,5 @@ ENTRY_FUNCTION(start_dr_imx8mp_evk, r0, r1, r2)
 	relocate_to_current_adr();
 	setup_c();
 
-	IMD_USED_OF(dr_imx8mp_evk);
-
 	dr_imx8mp_evk_start();
 }
