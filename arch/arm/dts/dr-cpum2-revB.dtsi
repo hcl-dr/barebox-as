@@ -159,7 +159,7 @@
 			regulator-name = "eth-phy-io";
 			pinctrl-names = "default";
 			regulator-min-microvolt = <1800000>;
-			regulator-max-microvolt = <3300000>;
+			regulator-max-microvolt = <1800000>;
 			gpio = <&gpio4 29 GPIO_ACTIVE_HIGH>;
 			enable-active-high;
 		};
