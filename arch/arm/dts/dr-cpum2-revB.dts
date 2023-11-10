@@ -48,10 +48,10 @@
 		magic = <0x883b86a6>;
 		compatible = "barebox,state";
 		backend-type = "raw";
-		backend = <&backend_state_usdhc>;
+		backend = <&backend_state_qspi>;
 		backend-stridesize = <64>;
 		status = "okay";
-		/* backend-storage-type = "circular"; */
+		backend-storage-type = "circular";
 
 		#address-cells = <1>;
 		#size-cells = <1>;
