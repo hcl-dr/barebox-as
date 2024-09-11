@@ -1,0 +1,12 @@
+#!/bin/sh
+
+detect mmc0
+detect mmc1
+global.autoboot_abort_key="ctrl-c"
+global.boot.default="sdcard bootchooser"
+global.bootchooser.state_prefix="state.bootstate"
+global.bootchooser.targets="system0 system1"
+global.bootchooser.reset_attempts="power-on"
+global.bootchooser.retry=1
+global.boot.watchdog_timeout=100
+global bootm.fdt="as-imx93-qsb.dtb"
