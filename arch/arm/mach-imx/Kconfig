@@ -768,6 +768,25 @@ config MACH_TQMA93XX
 	select FIRMWARE_IMX93_ATF
 	select FIRMWARE_IMX_LPDDR4_PMU_TRAIN
 
+config MACH_AS_IMX93_EVK
+	bool "NXP IMX93 EVAL Board"
+	select ARCH_IMX93
+	select IMX9_DRAM
+	select I2C
+	select I2C_IMX_LPI2C
+	select FIRMWARE_IMX93_ATF
+	select FIRMWARE_IMX_LPDDR4_PMU_TRAIN
+
+config MACH_AS_IMX93_QSB
+	bool "NXP IMX93 QSB Board"
+	select ARCH_IMX93
+	select IMX9_DRAM
+	select I2C
+	select I2C_IMX_LPI2C
+	select FIRMWARE_IMX93_ATF
+	select FIRMWARE_IMX_LPDDR4_PMU_TRAIN
+	select I2C_IMX_EARLY
+
 endif
 
 endmenu
