@@ -1,0 +1,101 @@
+#include <arm64/freescale/imx93-11x11-evk.dts>
+#include "imx93.dtsi"
+
+/ {
+    model = "Autostore iMX93 EVK";
+    compatible = "as,as-imx93-evk", "fsl,imx93";
+
+    chosen {
+		stdout-path = &lpuart1;
+
+		environment-emmc {
+			compatible = "barebox,environment";
+			device-path = &usdhc1, "partname:barebox-environment";
+			status = "okay";
+		};
+	};
+
+    state: state {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		magic = <0x1c5b3f49>;
+		compatible = "barebox,state";
+		backend-type = "raw";
+		backend = <&backend_state_usdhc>;
+                /*
+                 * barebox-state partition size: 1 MiB
+                 * nr. of redundant copies:      4
+                 * ==> max. stride size: 1 MiB / 4 = 256 KiB = 262144 Byte
+                 *
+                 * stride size:     262144 Byte
+                 * raw-header:     -    16 Byte
+                 * direct-storage: -     8 Byte
+                 *                 ------------
+                 * max state size:  262120 Byte
+                 *                  ===========
+                 */
+		backend-stridesize = <0x40000>;
+
+		bootstate {
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			system0 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+
+				remaining_attempts@0 {
+					reg = <0x0 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority@4 {
+					reg = <0x4 0x4>;
+					type = "uint32";
+					default = <30>;
+				};
+			};
+
+			system1 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+
+				remaining_attempts@8 {
+					reg = <0x8 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority@C {
+					reg = <0xC 0x4>;
+					type = "uint32";
+					default = <20>;
+				};
+			};
+
+			last_chosen@10 {
+				reg = <0x10 0x4>;
+				type = "uint32";
+			};
+		};
+    };
+};
+
+&usdhc1 {
+	status = "okay";
+
+	partitions {
+		compatible = "fixed-partitions";
+		#size-cells = <1>;
+		#address-cells = <1>;
+
+		partition@0 {
+			label = "barebox-environment";
+			reg = <0x0 0x100000>;
+		};
+
+		backend_state_usdhc: partition@100000 {
+			reg = <0x100000 0x100000>;
+			label = "state-emmc";
+		};
+	};
+};

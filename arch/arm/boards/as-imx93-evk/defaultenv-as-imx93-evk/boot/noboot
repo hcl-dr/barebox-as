@@ -1,0 +1,4 @@
+#!/bin/sh
+led 1 0
+led 2 0
+led -b 0 500 2000
