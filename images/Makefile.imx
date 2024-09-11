@@ -522,6 +522,10 @@ pblb-$(CONFIG_MACH_TQMA93XX) += start_imx93_tqma93xx
 FILE_barebox-tqma93xx.img = start_imx93_tqma93xx.pblb.imx9img
 image-$(CONFIG_MACH_TQMA93XX) += barebox-tqma93xx.img
 
+pblb-$(CONFIG_MACH_AS_IMX93_QSB) += start_as93qsb
+FILE_barebox-as93qsb.img = start_as93qsb.pblb.imx9img
+image-$(CONFIG_MACH_AS_IMX93_QSB) += barebox-as93qsb.img
+
 pblb-$(CONFIG_MACH_PHYTEC_PHYCORE_IMX93) += start_imx93_phyboard_segin
 FILE_barebox-phyboard_segin.img = start_imx93_phyboard_segin.pblb.imx9img
 image-$(CONFIG_MACH_PHYTEC_PHYCORE_IMX93) += barebox-phyboard_segin.img
