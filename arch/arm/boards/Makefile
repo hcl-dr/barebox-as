@@ -4,7 +4,6 @@
 obj-$(CONFIG_MACH_ADVANTECH_ROM_742X)		+= advantech-mx6/
 obj-$(CONFIG_MACH_AFI_GF)			+= afi-gf/
 obj-$(CONFIG_MACH_ANIMEO_IP)			+= animeo_ip/
-obj-$(CONFIG_MACH_AM625_SK)			+= am625-sk/
 obj-$(CONFIG_MACH_AT91RM9200EK)			+= at91rm9200ek/
 obj-$(CONFIG_MACH_AT91SAM9260EK)		+= at91sam9260ek/
 obj-$(CONFIG_MACH_AT91SAM9261EK)		+= at91sam9261ek/
@@ -187,3 +186,4 @@ obj-$(CONFIG_MACH_RADXA_CM3)			+= radxa-cm3/
 obj-$(CONFIG_MACH_TQMA93XX)			+= tqma93xx/
 obj-$(CONFIG_MACH_WOLFVISION_PF5)		+= wolfvision-pf5/
 obj-$(CONFIG_MACH_XUNLONG_ORANGEPI_5_PLUS)	+= xunlong-orangepi-5-plus/
+obj-$(CONFIG_MACH_AS_IMX93_QSB)			+= as-imx93-qsb/
