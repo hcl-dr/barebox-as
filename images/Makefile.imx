@@ -522,3 +522,7 @@ image-$(CONFIG_MACH_TQMA93XX) += barebox-tqma93xx.img
 pblb-$(CONFIG_MACH_AS_IMX93_EVK) += start_as93evk
 FILE_barebox-as93evk.img = start_as93evk.pblb.imx9img
 image-$(CONFIG_MACH_AS_IMX93_EVK) += barebox-as93evk.img
+
+pblb-$(CONFIG_MACH_AS_IMX93_QSB) += start_as93qsb
+FILE_barebox-as93qsb.img = start_as93qsb.pblb.imx9img
+image-$(CONFIG_MACH_AS_IMX93_QSB) += barebox-as93qsb.img

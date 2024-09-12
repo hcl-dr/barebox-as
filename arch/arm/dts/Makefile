@@ -230,6 +230,7 @@ lwl-$(CONFIG_MACH_VARISCITE_DT8MCUSTOMBOARD_IMX8MP) += imx8mp-var-dart-dt8mcusto
 lwl-$(CONFIG_MACH_TQMA93XX) += imx93-tqma9352-mba93xxca.dtb.o \
 			       imx93-tqma9352-mba93xxla.dtb.o
 lwl-$(CONFIG_MACH_AS_IMX93_EVK) += as-imx93evk.dtb.o
+lwl-$(CONFIG_MACH_AS_IMX93_QSB) += as-imx93qsb.dtb.o
 
 obj-$(CONFIG_MACH_WOLFVISION_PF5) += rk3568-wolfvision-pf5-io-expander.dtbo.o
 

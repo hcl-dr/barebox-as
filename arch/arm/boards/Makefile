@@ -180,3 +180,4 @@ obj-$(CONFIG_MACH_RADXA_CM3)			+= radxa-cm3/
 obj-$(CONFIG_MACH_TQMA93XX)			+= tqma93xx/
 obj-$(CONFIG_MACH_WOLFVISION_PF5)		+= wolfvision-pf5/
 obj-$(CONFIG_MACH_AS_IMX93_EVK)			+= as-imx93-evk/
+obj-$(CONFIG_MACH_AS_IMX93_QSB)			+= as-imx93-qsb/
