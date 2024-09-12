@@ -43,7 +43,7 @@ static int as93evk_probe(struct device *dev)
 
 static const struct of_device_id as93evk_of_match[] = {
         {
-                .compatible = "tq,imx93-asevk",
+                .compatible = "as,as-imx93evk",
         },
         { /* sentinel */ },
 };

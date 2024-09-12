@@ -3,7 +3,7 @@
 
 / {
     model = "Autostore iMX93 EVK";
-    compatible = "as,as-imx93-evk", "fsl,imx93";
+    compatible = "as,as-imx93evk", "fsl,imx93";
 
     chosen {
 		stdout-path = &lpuart1;
