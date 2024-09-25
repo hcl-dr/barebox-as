@@ -359,8 +359,10 @@ static void save_trained_mr12_14(struct dram_cfg_param *cfg, u32 cfg_num, u32 mr
 static struct imx_fracn_gppll_rate_table imx9_fracpll_tbl[] = {
 	{ .rate = 1000000000U, .rdiv = 1, .mfi = 166, .odiv = 4, .mfn = 2, .mfd = 3 }, /* 1000MHz */
 	{ .rate = 933000000U, .rdiv = 1, .mfi = 155, .odiv = 4, .mfn = 1, .mfd = 2 }, /* 933MHz */
+	{ .rate = 800000000U, .rdiv = 1, .mfi = 200, .odiv = 6, .mfn = 0, .mfd = 1 }, /* 800MHz */
 	{ .rate = 700000000U, .rdiv = 1, .mfi = 145, .odiv = 5, .mfn = 5, .mfd = 6 }, /* 700MHz */
 	{ .rate = 484000000U, .rdiv = 1, .mfi = 121, .odiv = 6, .mfn = 0, .mfd = 1 }, /* 480MHz */
+	{ .rate = 600000000U, .rdiv = 1, .mfi = 200, .odiv = 8, .mfn = 0, .mfd = 1 }, /* 600MHz */
 	{ .rate = 445333333U, .rdiv = 1, .mfi = 167, .odiv = 9, .mfn = 0, .mfd = 1 },
 	{ .rate = 466000000U, .rdiv = 1, .mfi = 155, .odiv = 8, .mfn = 1, .mfd = 3 }, /* 466MHz */
 	{ .rate = 400000000U, .rdiv = 1, .mfi = 200, .odiv = 12, .mfn = 0, .mfd = 1 }, /* 400MHz */
