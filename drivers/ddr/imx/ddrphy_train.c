@@ -145,9 +145,11 @@ int ddr_cfg_phy(struct dram_controller *dram, struct dram_timing_info *dram_timi
 
 		/* Wait for the training firmware to complete */
 		ret = wait_ddrphy_training_complete(dram);
-		if (ret)
+		if (ret) {
+			pr_err("%s: DDR training failed - %d\n", __func__, ret);
 			return ret;
-
+		}
+		debug("%s@%d\n", __func__, __LINE__);
 		/* Halt the microcontroller. */
 		dwc_ddrphy_apb_wr(dram, 0xd0099, 0x1);
 

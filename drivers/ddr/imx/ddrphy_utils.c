@@ -83,7 +83,6 @@ int wait_ddrphy_training_complete(struct dram_controller *dram)
 {
 	for (;;) {
 		const u32 m = ddrc_phy_get_message(dram, PMC_MESSAGE_ID);
-
 		switch (m) {
 		case PMC_TRAIN_STREAM_START:
 			ddrc_phy_fetch_streaming_message(dram);
@@ -91,7 +90,7 @@ int wait_ddrphy_training_complete(struct dram_controller *dram)
 		case PMC_TRAIN_SUCCESS:
 			return 0;
 		case PMC_TRAIN_FAIL:
-			hang();
+			return m;
 		}
 	}
 }
