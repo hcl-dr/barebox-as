@@ -3,4 +3,4 @@ global.bootm.image=/mnt/mmc1.0/boot/Image
 global.bootm.oftree=/mnt/mmc1.0/boot/${global.bootm.fdt}
 #global.bootm.image=/mnt/mmc0.0/boot/fitImage@${global.boot.fitnode}
 #global.bootm.initrd=<path to initrd>
-global linux.bootargs.dyn.root="root=/dev/mmcblk1p1 rootfstype=ext4 rootwait rw rauc.slot=_external_"
+global linux.bootargs.dyn.root="root=/dev/mmcblk1p1 rootfstype=ext4 rootwait rw rauc.slot=_external_ ${global.nvram}"

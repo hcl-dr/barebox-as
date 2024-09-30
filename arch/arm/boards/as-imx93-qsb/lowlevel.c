@@ -28,11 +28,11 @@ static int pca9450_config(struct pbl_i2c *i2c) {
 
 	pmic_reg_write8(i2c, 0x25, PCA9450_BUCK1CTRL, 0x59);
 	pmic_reg_read8(i2c, 0x25, PCA9450_PWR_CTRL, &val);
-	pr_info("PCA9450_PWR_CTRL =0x%01x\n", val);
+	pr_debug("PCA9450_PWR_CTRL =0x%01x\n", val);
 	pmic_reg_read8(i2c, 0x25, PCA9450_STATUS1, &val);
-	pr_info("PCA9450_STATUS1 = 0x%01x\n", val);
+	pr_debug("PCA9450_STATUS1 = 0x%01x\n", val);
 	pmic_reg_read8(i2c, 0x25, PCA9450_STATUS2, &val);
-	pr_info("PCA9450_STATUS2 = 0x%01x\n", val);
+	pr_debug("PCA9450_STATUS2 = 0x%01x\n", val);
 
 #if 0
 	if (val & PCA9450_REG_PWRCTRL_TOFF_DEB) {
@@ -77,7 +77,7 @@ static noinline void as93qsb_init(void)
 
 	pbl_set_putc(lpuart32_putc, base + 0x10);
 	imx9_uart_setup(IOMEM(base));
-	pr_warn("Config i2c\n");
+	pr_debug("Config i2c\n");
 	i2c = imx93_i2c_early_init(IOMEM(MX9_I2C2_BASE_ADDR));
 	pca9450_config(i2c);
 
@@ -86,7 +86,7 @@ static noinline void as93qsb_init(void)
 		i2c = imx93_i2c_early_init(IOMEM(MX9_I2C2_BASE_ADDR));
 		pca9450_config(i2c);
 		imx93_ddr_init(&asimx93qsb_dram_timing, DRAM_TYPE_LPDDR4);
-		pr_warn("DDR in EL3 after\n");
+		pr_debug("DDR in EL3 after\n");
 		imx93_romapi_load_image();
 		imx93_load_and_start_image_via_tfa();
 
