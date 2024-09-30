@@ -3,4 +3,4 @@ usb
 sleep 1
 global.bootm.image=/mnt/disk0.0/boot/Image
 global.bootm.oftree=/mnt/mmc0.0/boot/${global.bootm.fdt}
-global linux.bootargs.dyn.root="root=/dev/sda1 rootfstype=ext4 rootwait ro rauc.slot=_external_"
+global linux.bootargs.dyn.root="root=/dev/sda1 rootfstype=ext4 rootwait ro rauc.slot=_external_ ${global.nvram}"

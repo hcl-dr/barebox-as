@@ -10,3 +10,4 @@ global.bootchooser.reset_attempts="power-on"
 global.bootchooser.retry=1
 global.boot.watchdog_timeout=100
 global bootm.fdt="as-imx93-qsb.dtb"
+global nvram="SYS_PRODUCT_SERIAL=${global.SYS_PRODUCT_SERIAL} SYS_PRODUCT_ID=${global.SYS_PRODUCT_ID}"
