@@ -87,7 +87,6 @@ static noinline void as93qsb_init(void)
 		pca9450_config(i2c);
 		imx93_ddr_init(&asimx93qsb_dram_timing, DRAM_TYPE_LPDDR4);
 		pr_debug("DDR in EL3 after\n");
-		imx93_romapi_load_image();
 		imx93_load_and_start_image_via_tfa();
 
 	}

@@ -33,7 +33,6 @@ static noinline void as93evk_init(void)
 
 	imx93_ddr_init(&asimx93evk_dram_timing, DRAM_TYPE_LPDDR4);
 	if (current_el() == 3) {
-		imx93_romapi_load_image();
 		imx93_load_and_start_image_via_tfa();
 
 	}
