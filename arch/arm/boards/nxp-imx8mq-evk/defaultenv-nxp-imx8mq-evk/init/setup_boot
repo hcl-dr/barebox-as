@@ -9,5 +9,5 @@ global.bootchooser.targets="system0 system1"
 global.bootchooser.reset_attempts="power-on"
 global.bootchooser.retry=1
 global.boot.watchdog_timeout=100
-global bootm.fdt="imx8mp-evk.dtb"
+global bootm.fdt="imx8mq-evk.dtb"
 global nvram="SYS_PRODUCT_SERIAL=${global.SYS_PRODUCT_SERIAL} SYS_PRODUCT_ID=${global.SYS_PRODUCT_ID}"

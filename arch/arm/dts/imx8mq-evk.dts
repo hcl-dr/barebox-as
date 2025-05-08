@@ -11,16 +11,80 @@
 #include "imx8mq-ddrc.dtsi"
 
 / {
+	aliases {
+		mmc0 = &usdhc1;
+		mmc1 = &usdhc2;
+		state = &state_sd;
+	};
 	chosen {
 		environment-emmc {
 			compatible = "barebox,environment";
-			device-path = &env_sd1;
-			status = "disabled";
+			device-path = &usdhc1, "partname:barebox-environment";
+			status = "okay";
 		};
 		environment-sd {
 			compatible = "barebox,environment";
-			device-path = &env_sd2;
-			status = "disabled";
+			device-path = &usdhc2, "partname:barebox-environment";
+			status = "okay";
+		};
+	};
+
+	state_sd: state {
+		magic = <0x883b86a6>;
+		compatible = "barebox,state";
+		backend-type = "raw";
+		backend = <&backend_state_usdhc>;
+		backend-stridesize = <0x200>;
+		status = "okay";
+		/*backend-storage-type = "circular"; */
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+		bootstate {
+			#address-cells = <1>;
+			#size-cells = <1>;
+			last_chosen {
+				reg = <0x0 0x4>;
+				type = "uint32";
+			};
+			system0 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				remaining_attempts {
+					reg = <0x4 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x8 0x4>;
+					type = "uint32";
+					default = <21>;
+				};
+				ok {
+					reg = <0xc 0x4>;
+					type = "uint32";
+					default = <0>;
+				};
+			};
+			system1 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				remaining_attempts {
+					reg = <0x10 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x14 0x4>;
+					type = "uint32";
+					default = <20>;
+				};
+				ok {
+					reg = <0x18 0x4>;
+					type = "uint32";
+					default = <0>;
+				};
+			};
 		};
 	};
 };
@@ -28,30 +92,43 @@
 &usdhc1 {
 	#address-cells = <1>;
 	#size-cells = <1>;
+	partitions {
+		compatible = "fixed-partitions";
+		#size-cells = <1>;
+		#address-cells = <1>;
+		partition@0 {
+			label = "barebox";
+			reg = <0x0 0xe0000>;
+		};
 
-	partition@0 {
-		label = "barebox";
-		reg = <0x0 0xe0000>;
-	};
+		partition@e0000 {
+			label = "barebox-environment";
+			reg = <0xe0000 0x20000>;
+		};
 
-	env_sd1: partition@e0000 {
-		label = "barebox-environment";
-		reg = <0xe0000 0x20000>;
+		backend_state_usdhc: partition@100000 {
+			reg = <0x100000 0x100000>;
+			label = "state-emmc";
+		};
 	};
 };
 
 &usdhc2 {
 	#address-cells = <1>;
 	#size-cells = <1>;
+	partitions {
+		compatible = "fixed-partitions";
+		#size-cells = <1>;
+		#address-cells = <1>;
+		partition@0 {
+			label = "barebox";
+			reg = <0x0 0xe0000>;
+		};
 
-	partition@0 {
-		label = "barebox";
-		reg = <0x0 0xe0000>;
-	};
-
-	env_sd2: partition@e0000 {
-		label = "barebox-environment";
-		reg = <0xe0000 0x20000>;
+		partition@e0000 {
+			label = "barebox-environment";
+			reg = <0xe0000 0x20000>;
+		};
 	};
 };
 
