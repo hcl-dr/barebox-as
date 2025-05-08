@@ -10,6 +10,12 @@
 #include "imx8mp.dtsi"
 
 / {
+	aliases {
+		mmc0 = &usdhc3;
+		state = &state_flash;
+		ethernet0 = &eqos;
+	};
+
 	chosen {
 		environment-sd {
 			compatible = "barebox,environment";
@@ -20,6 +26,70 @@
 			compatible = "barebox,environment";
 			device-path = &env_sd3;
 			status = "disabled";
+		};
+		environment-qspi {
+			compatible = "barebox,environment";
+			device-path = &{flexspi/flash@0}, "partname:barebox-environment-qspi";
+			status = "okay";
+		};
+	};
+
+	state_flash: state {
+		magic = <0x883b86a6>;
+		compatible = "barebox,state";
+		backend-type = "raw";
+		backend = <&backend_state_qspi>;
+		backend-stridesize = <64>;
+		status = "okay";
+		backend-storage-type = "circular";
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+		bootstate {
+			#address-cells = <1>;
+			#size-cells = <1>;
+			last_chosen {
+				reg = <0x0 0x4>;
+				type = "uint32";
+			};
+			system0 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				remaining_attempts {
+					reg = <0x4 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x8 0x4>;
+					type = "uint32";
+					default = <21>;
+				};
+				ok {
+					reg = <0xc 0x4>;
+					type = "uint32";
+					default = <0>;
+				};
+			};
+			system1 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				remaining_attempts {
+					reg = <0x10 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x14 0x4>;
+					type = "uint32";
+					default = <20>;
+				};
+				ok {
+					reg = <0x18 0x4>;
+					type = "uint32";
+					default = <0>;
+				};
+			};
 		};
 	};
 
@@ -38,22 +108,39 @@
 };
 
 &{flexspi/flash@0} {
-	partitions {
+		partitions {
 		compatible = "fixed-partitions";
 		#address-cells = <1>;
 		#size-cells = <1>;
 
 		partition@0 {
-			label = "barebox";
-			reg = <0x0 0xe0000>;
+			label = "barebox-environment-qspi";
+			reg = <0x0 0x200000>;
 		};
 
-		partition@e0000 {
-			label = "barebox-environment";
-			reg = <0xe0000 0x20000>;
+		backend_state_qspi: state@200000 {
+			label = "barebox-state";
+			reg = <0x200000 0x200000>;
+		};
+
+		partition@400000 {
+			label = "system_a";
+			reg = <0x400000 0x40000>;
+		};
+		partition@440000 {
+			label = "system_b";
+			reg = <0x440000 0x40000>;
+		};
+
+		partition@480000 {
+			label = "user_a";
+			reg = <0x480000 0x40000>;
+		};
+		partition@4c0000 {
+			label = "user_b";
+			reg = <0x4c0000 0x40000>;
 		};
 	};
-
 };
 
 &reg_usdhc2_vmmc {
@@ -105,4 +192,16 @@
 		label = "barebox-environment";
 		reg = <0xe0000 0x20000>;
 	};
+};
+
+&lcdif1 {
+	status = "disabled";
+};
+
+&lcdif3 {
+	status = "disabled";
+};
+
+&mipi_dsi {
+	status = "disabled";
 };
