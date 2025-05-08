@@ -21,6 +21,7 @@ static int nxp_imx8mp_evk_probe(struct device *dev)
 	int sd_bbu_flag = 0;
 	u32 val;
 
+	defaultenv_append_directory(defaultenv_nxp_imx8mp_evk);
 	if (bootsource_get() == BOOTSOURCE_MMC) {
 		if (bootsource_get_instance() == 2) {
 			of_device_enable_path("/chosen/environment-emmc");

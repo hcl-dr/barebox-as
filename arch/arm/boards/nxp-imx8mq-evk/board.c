@@ -8,7 +8,7 @@
 #include <linux/phy.h>
 #include <linux/sizes.h>
 #include <mach/imx/bbu.h>
-
+#include <deep-probe.h>
 #include <envfs.h>
 
 #define PHY_ID_AR8031	0x004dd074
@@ -30,28 +30,42 @@ static int ar8031_phy_fixup(struct phy_device *phydev)
 	return 0;
 }
 
-static int nxp_imx8mq_evk_init(void)
+static int nxp_imx8mq_evk_probe(struct device *dev)
 {
-	int flags;
-
-	if (!of_machine_is_compatible("fsl,imx8mq-evk"))
-		return 0;
-
-	barebox_set_hostname("imx8mq-evk");
-
-	flags = bootsource_get_instance() == 0 ? BBU_HANDLER_FLAG_DEFAULT : 0;
-	imx8m_bbu_internal_mmcboot_register_handler("eMMC", "/dev/mmc0", flags);
-
-	flags = bootsource_get_instance() == 1 ? BBU_HANDLER_FLAG_DEFAULT : 0;
-	imx8m_bbu_internal_mmc_register_handler("SD", "/dev/mmc1.barebox", flags);
-
-	if (bootsource_get_instance() == 0)
+	int emmc_bbu_flag = 0;
+	int sd_bbu_flag = 0;
+	defaultenv_append_directory(defaultenv_nxp_imx8mq_evk);
+	if (bootsource_get() == BOOTSOURCE_MMC) {
+		if (bootsource_get_instance() == 2) {
+			of_device_enable_path("/chosen/environment-emmc");
+			emmc_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
+		} else {
+			of_device_enable_path("/chosen/environment-sd");
+			sd_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
+		}
+	} else {
 		of_device_enable_path("/chosen/environment-emmc");
-	else
-		of_device_enable_path("/chosen/environment-sd");
+		emmc_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
+	}
+
+	imx8m_bbu_internal_mmc_register_handler("SD", "/dev/mmc1.barebox", sd_bbu_flag);
+	imx8m_bbu_internal_mmcboot_register_handler("eMMC", "/dev/mmc1", emmc_bbu_flag);
 
 	phy_register_fixup_for_uid(PHY_ID_AR8031, AR_PHY_ID_MASK,
-				   ar8031_phy_fixup);
+		ar8031_phy_fixup);
+
 	return 0;
 }
-device_initcall(nxp_imx8mq_evk_init);
+
+static const struct of_device_id nxp_imx8mq_evk_of_match[] = {
+	{ .compatible = "fsl,imx8mq-evk" },
+	{ /* Sentinel */ }
+};
+BAREBOX_DEEP_PROBE_ENABLE(nxp_imx8mq_evk_of_match);
+
+static struct driver nxp_imx8mq_evk_board_driver = {
+	.name = "board-nxp-imx8mq-evk",
+	.probe = nxp_imx8mq_evk_probe,
+	.of_compatible = nxp_imx8mq_evk_of_match,
+};
+coredevice_platform_driver(nxp_imx8mq_evk_board_driver);
