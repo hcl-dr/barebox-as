@@ -18,25 +18,13 @@
 static int nxp_imx8mp_evk_probe(struct device *dev)
 {
 	int emmc_bbu_flag = 0;
-	int sd_bbu_flag = 0;
 	u32 val;
 
 	defaultenv_append_directory(defaultenv_nxp_imx8mp_evk);
-	if (bootsource_get() == BOOTSOURCE_MMC) {
-		if (bootsource_get_instance() == 2) {
-			of_device_enable_path("/chosen/environment-emmc");
-			emmc_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
-		} else {
-			of_device_enable_path("/chosen/environment-sd");
-			sd_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
-		}
-	} else {
-		of_device_enable_path("/chosen/environment-emmc");
-		emmc_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
-	}
+	of_device_enable_path("/chosen/environment-qspi");
+	emmc_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
 
-	imx8m_bbu_internal_mmc_register_handler("SD", "/dev/mmc1.barebox", sd_bbu_flag);
-	imx8m_bbu_internal_mmcboot_register_handler("eMMC", "/dev/mmc2", emmc_bbu_flag);
+	imx8m_bbu_internal_mmcboot_register_handler("eMMC", "/dev/mmc0", emmc_bbu_flag);
 	imx8m_bbu_internal_flexspi_nor_register_handler("QSPI", "/dev/m25p0.barebox", 0);
 
 	/* Enable RGMII TX clk output */

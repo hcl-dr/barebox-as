@@ -33,23 +33,11 @@ static int ar8031_phy_fixup(struct phy_device *phydev)
 static int nxp_imx8mq_evk_probe(struct device *dev)
 {
 	int emmc_bbu_flag = 0;
-	int sd_bbu_flag = 0;
 	defaultenv_append_directory(defaultenv_nxp_imx8mq_evk);
-	if (bootsource_get() == BOOTSOURCE_MMC) {
-		if (bootsource_get_instance() == 2) {
-			of_device_enable_path("/chosen/environment-emmc");
-			emmc_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
-		} else {
-			of_device_enable_path("/chosen/environment-sd");
-			sd_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
-		}
-	} else {
-		of_device_enable_path("/chosen/environment-emmc");
-		emmc_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
-	}
 
-	imx8m_bbu_internal_mmc_register_handler("SD", "/dev/mmc1.barebox", sd_bbu_flag);
-	imx8m_bbu_internal_mmcboot_register_handler("eMMC", "/dev/mmc1", emmc_bbu_flag);
+	of_device_enable_path("/chosen/environment-emmc");
+	emmc_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
+	imx8m_bbu_internal_mmcboot_register_handler("eMMC", "/dev/mmc0", emmc_bbu_flag);
 
 	phy_register_fixup_for_uid(PHY_ID_AR8031, AR_PHY_ID_MASK,
 		ar8031_phy_fixup);
