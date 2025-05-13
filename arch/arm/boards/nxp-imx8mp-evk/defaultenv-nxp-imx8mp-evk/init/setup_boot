@@ -2,8 +2,9 @@
 
 detect mmc0
 detect mmc1
+usb start
 global.autoboot_abort_key="ctrl-c"
-global.boot.default="sdcard bootchooser"
+global.boot.default="usb bootchooser"
 global.bootchooser.state_prefix="state.bootstate"
 global.bootchooser.targets="system0 system1"
 global.bootchooser.reset_attempts="power-on"
