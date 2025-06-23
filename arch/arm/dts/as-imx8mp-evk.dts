@@ -10,6 +10,10 @@
 #include "imx8mp.dtsi"
 
 / {
+
+	model = "Autostore iMX8MP EVK";
+    compatible = "fsl,as-imx8mp-evk", "fsl,imx8mp";
+
 	aliases {
 		mmc0 = &usdhc3;
 		state = &state_flash;

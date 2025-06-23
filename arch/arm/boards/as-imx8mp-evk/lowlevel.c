@@ -49,7 +49,7 @@ static void setup_uart(void)
 	putc_ll('>');
 }
 
-static struct pmic_config pca9450_cfg[] = {
+__maybe_unused  struct pmic_config pca9450_cfg[] = {
 	/* BUCKxOUT_DVS0/1 control BUCK123 output */
 	{ PCA9450_BUCK123_DVS, 0x29 },
 	/*
@@ -71,6 +71,29 @@ static struct pmic_config pca9450_cfg[] = {
 	{ PCA9450_RESET_CTRL, 0xA1 },
 };
 
+static struct pmic_config pca9450_cfg_nom[] = {
+	/* BUCKxOUT_DVS0/1 control BUCK123 output */
+	{ PCA9450_BUCK123_DVS, 0x29 },
+	/*
+	 * Set VDD_SOC to typical value 0.85V before first
+	 * DRAM access, set DVS1 to 0.85v for suspend.
+	 * Enable DVS control through PMIC_STBY_REQ and
+	 * set B1_ENMODE=1 (ON by PMIC_ON_REQ=H)
+	 */
+	{ PCA9450_BUCK1OUT_DVS0, 0x14 },
+	{ PCA9450_BUCK1OUT_DVS1, 0x14 },
+	{ PCA9450_BUCK1CTRL, 0x59 },
+	/* set WDOG_B_CFG to cold reset */
+	{ PCA9450_RESET_CTRL, 0xA1 },
+	/*
+	 * As we do cold resets and Linux will take care to reconfigure the
+	 * pmic before switching to the OD ARM frequency, we will just keep
+	 * VDD_ARM at 850mV
+	 */
+	{ PCA9450_BUCK2OUT_DVS0, 0x14 },
+};
+
+
 static void power_init_board(void)
 {
 	struct pbl_i2c *i2c;
@@ -82,7 +105,7 @@ static void power_init_board(void)
 
 	i2c = imx8m_i2c_early_init(IOMEM(MX8MP_I2C1_BASE_ADDR));
 
-	pmic_configure(i2c, 0x25, pca9450_cfg, ARRAY_SIZE(pca9450_cfg));
+	pmic_configure(i2c, 0x25, pca9450_cfg_nom, ARRAY_SIZE(pca9450_cfg_nom));
 }
 
 extern struct dram_timing_info as_imx8mp_evk_dram_timing;
