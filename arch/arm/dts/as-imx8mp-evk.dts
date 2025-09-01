@@ -7,9 +7,14 @@
 /dts-v1/;
 
 #include <arm64/freescale/imx8mp-evk.dts>
+#include <arm64/freescale/imx8mp-nominal.dtsi>
 #include "imx8mp.dtsi"
 
 / {
+
+	model = "Autostore iMX8MP EVK";
+    compatible = "fsl,as-imx8mp-evk", "fsl,imx8mp";
+
 	aliases {
 		mmc0 = &usdhc3;
 		state = &state_flash;

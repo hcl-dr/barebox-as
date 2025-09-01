@@ -36,7 +36,7 @@ static int nxp_imx8mp_evk_probe(struct device *dev)
 }
 
 static const struct of_device_id nxp_imx8mp_evk_of_match[] = {
-	{ .compatible = "fsl,imx8mp-evk" },
+	{ .compatible = "fsl,as-imx8mp-evk" },
 	{ /* Sentinel */ }
 };
 BAREBOX_DEEP_PROBE_ENABLE(nxp_imx8mp_evk_of_match);
