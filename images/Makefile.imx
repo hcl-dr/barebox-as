@@ -475,6 +475,8 @@ $(call build_imx8m_habv4img, CONFIG_MACH_NXP_IMX8MN_EVK, start_nxp_imx8mn_evk, n
 # ----------------------- i.MX8mp based boards --------------------------
 $(call build_imx8m_habv4img, CONFIG_MACH_NXP_IMX8MP_EVK, start_nxp_imx8mp_evk, nxp-imx8mp-evk/flash-header-imx8mp-evk, nxp-imx8mp-evk)
 
+$(call build_imx8m_habv4img, CONFIG_MACH_AS_IMX8MP_EVK, start_as_imx8mp_evk, as-imx8mp-evk/flash-header-imx8mp-evk, as-imx8mp-evk)
+
 $(call build_imx8m_habv4img, CONFIG_MACH_KOENIGBAUER_ALPHAJET, start_koenigbauer_alphajet, congatec-qmx8p/flash-header-congatec-qmx8p, koenigbauer-alphajet)
 
 $(call build_imx8m_habv4img, CONFIG_MACH_KARO_QSXP_ML81, start_karo_qsxp_ml81, karo-qsxp-ml81/flash-header-karo-qsxp-ml81, karo-qsxp-ml81)
@@ -521,6 +523,14 @@ $(obj)/%.imx9img: $(obj)/% FORCE
 pblb-$(CONFIG_MACH_TQMA93XX) += start_imx93_tqma93xx
 FILE_barebox-tqma93xx.img = start_imx93_tqma93xx.pblb.imx9img
 image-$(CONFIG_MACH_TQMA93XX) += barebox-tqma93xx.img
+
+pblb-$(CONFIG_MACH_AS_IMX93_QSB) += start_as93qsb
+FILE_barebox-as93qsb.img = start_as93qsb.pblb.imx9img
+image-$(CONFIG_MACH_AS_IMX93_QSB) += barebox-as93qsb.img
+
+pblb-$(CONFIG_MACH_AS_IMX93_EVK) += start_as93evk
+FILE_barebox-as93evk.img = start_as93evk.pblb.imx9img
+image-$(CONFIG_MACH_AS_IMX93_EVK) += barebox-as93evk.img
 
 pblb-$(CONFIG_MACH_PHYTEC_PHYCORE_IMX93) += start_imx93_phyboard_segin
 FILE_barebox-phyboard_segin.img = start_imx93_phyboard_segin.pblb.imx9img
