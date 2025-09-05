@@ -20,7 +20,7 @@ static int nxp_imx8mp_evk_probe(struct device *dev)
 	int emmc_bbu_flag = 0;
 	u32 val;
 
-	defaultenv_append_directory(defaultenv_nxp_imx8mp_evk);
+	defaultenv_append_directory(defaultenv_as_nxp_imx8mp_evk);
 	of_device_enable_path("/chosen/environment-qspi");
 	emmc_bbu_flag = BBU_HANDLER_FLAG_DEFAULT;
 

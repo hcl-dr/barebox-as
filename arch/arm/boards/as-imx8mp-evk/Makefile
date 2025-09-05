@@ -2,4 +2,4 @@
 
 obj-y += board.o
 lwl-y += lowlevel.o lpddr4-timing.o
-bbenv-y += defaultenv-nxp-imx8mp-evk
+bbenv-y += defaultenv-as-nxp-imx8mp-evk
