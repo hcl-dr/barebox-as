@@ -2,7 +2,7 @@
 
 detect mmc0
 detect mmc1
-usb start
+detect usb1
 global.autoboot_abort_key="ctrl-c"
 global.boot.default="usb bootchooser"
 global.bootchooser.state_prefix="state.bootstate"
